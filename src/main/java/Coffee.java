@@ -1,8 +1,8 @@
 import java.util.Scanner;
-import java.util.ArrayList;
 
 public class Coffee {
     public static void main(String[] args) {
+
         String horizontalRule =
                 "---------------------------------------------";
         String coffee =
@@ -16,32 +16,53 @@ public class Coffee {
         System.out.println("Hello! I'm Coffee.\n");
         System.out.println("What can I do for you?\n");
 
-        String user_input = "";
         Scanner sc = new Scanner(System.in);
 
-        ArrayList<Task> taskList = new ArrayList<>();
+        TaskList taskList = new TaskList();
 
         while (true) {
-            user_input = sc.nextLine();
-            String[] parts = user_input.split("\\s+", 2);
+            String line = sc.nextLine();
+            String[] parts = line.split("\\s+", 2);
+            String cmdWord = parts[0];
+            String rest = parts.length > 1 ? parts[1] : "";
 
+            CommandType cmd = CommandType.from(cmdWord);
 
-            if (parts[0].equals("bye")) {
-                System.out.println("Bye. Hope to see you again soon!\n");
-                break;
-            } else if (parts[0].equals("list")) {
-                for (int i = 0; i < taskList.size(); i++) {
-                    System.out.println(i + 1 + ". " + taskList.get(i));
-                }
-            } else if (parts[0].equals("mark")) {
-                taskList.get(Integer.parseInt(parts[1])-1).markAsDone();
-            } else if (parts[0].equals("unmark")) {
-                taskList.get(Integer.parseInt(parts[1])-1).markAsNotDone();
-            } else {
-                System.out.println("added: " + user_input);
-                taskList.add(new Task(user_input));
+            switch (cmd) {
+                case BYE:
+                    System.out.println("Bye. Hope to see you again soon!\n");
+                    break;
+                case MARK:
+                    taskList.markAsDone(Integer.parseInt(rest) - 1);
+                    break;
+                case UNMARK:
+                    taskList.markAsNotDone(Integer.parseInt(rest) - 1);
+                    break;
+                case LIST:
+                    taskList.list();
+                    break;
+                case TODO:
+                    taskList.addTask(new ToDo(rest));
+                    break;
+                case DEADLINE:
+                    String deadlineDescription = rest.split("/by")[0].trim();
+                    String by = rest.split("/by")[1].trim();
+                    taskList.addTask(new Deadline(deadlineDescription, by));
+                    break;
+                case EVENT:
+                    String[] fromSplit = rest.split("/from", 2);
+                    String eventDescription = fromSplit[0].trim();
+
+                    String[] toSplit = fromSplit[1].split("/to", 2);
+                    String from = toSplit[0].trim();
+                    String to = toSplit[1].trim();
+
+                    taskList.addTask(new Event(eventDescription, from, to));
+                    break;
             }
+
             System.out.println(horizontalRule);
         }
+
     }
 }
