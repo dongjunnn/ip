@@ -6,6 +6,9 @@ public class TaskList {
 
     public void list() {
         System.out.println("Here are the tasks in your list:");
+        if (taskList.isEmpty()) {
+            System.out.println("Nothing =)");
+        }
         for (int i = 0; i < taskList.size(); i++) {
             System.out.println(i + 1 + ". " + taskList.get(i));
         }
@@ -18,12 +21,24 @@ public class TaskList {
         System.out.println("Now you have " + this.taskList.size() + " tasks in the list.");
     }
 
+    public void deleteTask(int i) {
+        int index = i - 1;
+        System.out.println("Noted. I've removed this task:");
+        System.out.println(taskList.get(index));
+        taskList.remove(index);
+        System.out.println("Now you have " + this.taskList.size() + " tasks in the list.");
+    }
+
     public void markAsDone(int i) {
-        taskList.get(i).markAsDone();
+        int index = i - 1;
+        taskList.get(index).markAsDone();
+        System.out.println("marked task " + i);
     }
 
     public void markAsNotDone(int i) {
-        taskList.get(i).markAsNotDone();
+        int index = i - 1;
+        taskList.get(index).markAsNotDone();
+        System.out.println("unmarked task " + i);
     }
 
 }

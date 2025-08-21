@@ -6,6 +6,7 @@ public enum CommandType {
     TODO,
     DEADLINE,
     EVENT,
+    DELETE,
     UNKNOWN;
 
     static CommandType from(String word) {
@@ -18,6 +19,7 @@ public enum CommandType {
             case "todo": return TODO;
             case "deadline": return DEADLINE;
             case "event": return EVENT;
+            case "delete": return DELETE;
             default: return UNKNOWN;
         }
     }

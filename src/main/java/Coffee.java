@@ -31,10 +31,10 @@ public class Coffee {
                     sc.close();
                     return;
                 case MARK:
-                    taskList.markAsDone(Integer.parseInt(rest) - 1);
+                    taskList.markAsDone(Integer.parseInt(rest));
                     break;
                 case UNMARK:
-                    taskList.markAsNotDone(Integer.parseInt(rest) - 1);
+                    taskList.markAsNotDone(Integer.parseInt(rest));
                     break;
                 case LIST:
                     taskList.list();
@@ -56,14 +56,21 @@ public class Coffee {
                     }
                     break;
                 case EVENT:
-                    String[] fromSplit = rest.split("/from", 2);
-                    String eventDescription = fromSplit[0].trim();
+                    try {
+                        String[] fromSplit = rest.split("/from", 2);
+                        String eventDescription = fromSplit[0].trim();
 
-                    String[] toSplit = fromSplit[1].split("/to", 2);
-                    String from = toSplit[0].trim();
-                    String to = toSplit[1].trim();
+                        String[] toSplit = fromSplit[1].split("/to", 2);
+                        String from = toSplit[0].trim();
+                        String to = toSplit[1].trim();
 
-                    taskList.addTask(new Event(eventDescription, from, to));
+                        taskList.addTask(new Event(eventDescription, from, to));
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                        System.out.println("The event command format is wrong. Use: deadline <desc> /from <time> /to <time>");
+                    }
+                    break;
+                case DELETE:
+                    taskList.deleteTask(Integer.parseInt(rest));
                     break;
                 case UNKNOWN:
                     System.out.println("OOPS!!! I'm sorry, but I don't know what that means :-(");
