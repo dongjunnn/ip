@@ -25,20 +25,35 @@ Here are the tasks in your list:
 2. [D][ ] submit report (by: 11/10/2019 5pm)
 3. [E][ ] team project meeting (from: 2/10/2019 2pm to: 4pm)
 ---------------------------------------------
-Got it. I've added this task:
-[D][ ] do homework (by: no idea :-p)
-Now you have 4 tasks in the list.
+marked task 2
 ---------------------------------------------
-Got it. I've added this task:
-[E][ ] orientation week (from: 4/10/2019 to: 11/10/2019)
-Now you have 5 tasks in the list.
+Here are the tasks in your list:
+1. [T][ ] visit new theme park
+2. [D][X] submit report (by: 11/10/2019 5pm)
+3. [E][ ] team project meeting (from: 2/10/2019 2pm to: 4pm)
+---------------------------------------------
+unmarked task 2
 ---------------------------------------------
 Here are the tasks in your list:
 1. [T][ ] visit new theme park
 2. [D][ ] submit report (by: 11/10/2019 5pm)
 3. [E][ ] team project meeting (from: 2/10/2019 2pm to: 4pm)
-4. [D][ ] do homework (by: no idea :-p)
-5. [E][ ] orientation week (from: 4/10/2019 to: 11/10/2019)
+---------------------------------------------
+The todo command format is wrong. Use: todo <desc>
+---------------------------------------------
+The deadline command format is wrong. Use: deadline <desc> /by <time>
+---------------------------------------------
+The event command format is wrong. Use: deadline <desc> /from <time> /to <time>
+---------------------------------------------
+OOPS!!! I'm sorry, but I don't know what that means :-(
+---------------------------------------------
+Noted. I've removed this task:
+[D][ ] submit report (by: 11/10/2019 5pm)
+Now you have 2 tasks in the list.
+---------------------------------------------
+Here are the tasks in your list:
+1. [T][ ] visit new theme park
+2. [E][ ] team project meeting (from: 2/10/2019 2pm to: 4pm)
 ---------------------------------------------
 Bye. Hope to see you again soon!
 
