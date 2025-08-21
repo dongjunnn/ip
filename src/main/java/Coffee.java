@@ -40,12 +40,20 @@ public class Coffee {
                     taskList.list();
                     break;
                 case TODO:
-                    taskList.addTask(new ToDo(rest));
+                    try {
+                        taskList.addTask(new ToDo(rest));
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("The todo command format is wrong. Use: todo <desc>");
+                    }
                     break;
                 case DEADLINE:
-                    String deadlineDescription = rest.split("/by")[0].trim();
-                    String by = rest.split("/by")[1].trim();
-                    taskList.addTask(new Deadline(deadlineDescription, by));
+                    try {
+                        String deadlineDescription = rest.split("/by")[0].trim();
+                        String by = rest.split("/by")[1].trim();
+                        taskList.addTask(new Deadline(deadlineDescription, by));
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                        System.out.println("The deadline command format is wrong. Use: deadline <desc> /by <time>");
+                    }
                     break;
                 case EVENT:
                     String[] fromSplit = rest.split("/from", 2);
@@ -56,6 +64,9 @@ public class Coffee {
                     String to = toSplit[1].trim();
 
                     taskList.addTask(new Event(eventDescription, from, to));
+                    break;
+                case UNKNOWN:
+                    System.out.println("OOPS!!! I'm sorry, but I don't know what that means :-(");
                     break;
             }
 
