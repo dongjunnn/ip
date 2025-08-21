@@ -2,12 +2,9 @@ import java.util.Scanner;
 
 public class Coffee {
     public static void main(String[] args) {
-
-        String horizontalRule =
-                "---------------------------------------------";
         String coffee =
-                "  ____       __  __           \n" +
-                        " / ___|___  / _|/ _| ___  ___ \n" +
+                "  ____       __  __\n" +
+                        " / ___|___  / _|/ _| ___  ___\n" +
                         "| |   / _ \\| |_| |_ / _ \\/ _ \\\n" +
                         "| |__| (_) |  _|  _|  __/  __/\n" +
                         " \\____\\___/|_| |_|  \\___|\\___|\n";
@@ -31,7 +28,8 @@ public class Coffee {
             switch (cmd) {
                 case BYE:
                     System.out.println("Bye. Hope to see you again soon!\n");
-                    break;
+                    sc.close();
+                    return;
                 case MARK:
                     taskList.markAsDone(Integer.parseInt(rest) - 1);
                     break;
@@ -61,7 +59,7 @@ public class Coffee {
                     break;
             }
 
-            System.out.println(horizontalRule);
+            LineBreak.printLineBreak();
         }
 
     }
