@@ -1,6 +1,6 @@
 todo visit new theme park
-deadline submit report /by 11/10/2019 5pm
-event team project meeting /from 2/10/2019 2pm /to 4pm
+deadline submit report /by 2019-10-11 1700
+event team project meeting /from 2019-10-02 1400 /to 2019-10-02 1600
 list
 mark 2
 list
@@ -8,7 +8,7 @@ unmark 2
 list
 todo
 deadline do homework
-event orientation week /from 4/10/2019
+event orientation week /from 2019-10-04
 blah
 delete 2
 list
