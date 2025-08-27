@@ -14,5 +14,8 @@ public class Event extends Task {
         return "[E]" + super.toString() + " (from: " + this.from + " to: " + this.to + ")";
     }
 
+    public String toFileString() {
+        return "E | " + super.getStatusIcon() + " | " + description + " | " + from + " " + to;
+    }
 
 }
