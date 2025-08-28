@@ -1,3 +1,5 @@
+package Coffee;
+
 public class UnknownCommand extends Command {
     private final String input;
 

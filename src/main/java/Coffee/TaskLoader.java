@@ -1,3 +1,5 @@
+package Coffee;
+
 public class TaskLoader {
     public static Task fromFileLine(String line) {
         System.out.println("Parsing: " + line);
@@ -19,7 +21,7 @@ public class TaskLoader {
             case "E":
                 String[] parts = p[3].trim().split(" ");
                 if (parts.length < 4) {
-                    throw new IllegalArgumentException("Bad Event line: " + line);
+                    throw new IllegalArgumentException("Bad Coffee.Event line: " + line);
                 }
                 String from = parts[0] + " " + parts[1];
                 String to   = parts[2] + " " + parts[3];

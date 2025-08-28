@@ -1,3 +1,5 @@
+package Coffee;
+
 public enum CommandType {
     BYE,
     LIST,

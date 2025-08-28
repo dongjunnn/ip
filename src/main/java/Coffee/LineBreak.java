@@ -1,3 +1,5 @@
+package Coffee;
+
 public class LineBreak {
 
     private static String lineBreak =

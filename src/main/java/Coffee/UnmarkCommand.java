@@ -1,9 +1,11 @@
-public class MarkCommand extends Command {
+package Coffee;
+
+public class UnmarkCommand extends Command {
     private final int index1Based;
 
-    public MarkCommand(String args) {
+    public UnmarkCommand(String args) {
         if (args == null || args.trim().isEmpty()) {
-            throw new IllegalArgumentException("The mark command format is wrong. Use: mark <index>");
+            throw new IllegalArgumentException("The unmark command format is wrong. Use: unmark <index>");
         }
         try {
             this.index1Based = Integer.parseInt(args.trim());
@@ -21,8 +23,8 @@ public class MarkCommand extends Command {
             ui.showMessage("Invalid task index: " + index1Based);
             return;
         }
-        tasks.markAsDone(index1Based);
+        tasks.markAsNotDone(index1Based);
         storage.save(tasks.view());
-        ui.showMessage("marked task " + index1Based);
+        ui.showMessage("unmarked task " + index1Based);
     }
 }

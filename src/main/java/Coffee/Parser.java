@@ -1,3 +1,5 @@
+package Coffee;
+
 public class Parser {
     public static Command parseCommand(String fullCommand) {
         String[] parts = fullCommand.split(" ", 2);

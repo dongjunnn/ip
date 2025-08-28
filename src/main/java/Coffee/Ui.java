@@ -1,3 +1,5 @@
+package Coffee;
+
 import java.util.Scanner;
 
 public class Ui {

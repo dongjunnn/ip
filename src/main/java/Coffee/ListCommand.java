@@ -1,3 +1,5 @@
+package Coffee;
+
 public class ListCommand extends Command {
 
     @Override

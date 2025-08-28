@@ -1,3 +1,5 @@
+package Coffee;
+
 public class DeadlineCommand extends Command {
     private final String description;
     private final String by;

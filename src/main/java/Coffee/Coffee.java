@@ -1,3 +1,5 @@
+package Coffee;
+
 public class Coffee {
 
     private Storage storage;
@@ -13,7 +15,7 @@ public class Coffee {
                         " \\____\\___/|_| |_|  \\___|\\___|\n";
 
         System.out.println(coffee);
-        System.out.println("Hello! I'm Coffee.\n");
+        System.out.println("Hello! I'm Coffee.Coffee.\n");
         System.out.println("What can I do for you?\n");
         ui = new Ui();
         storage = new Storage(filePath);

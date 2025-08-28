@@ -1,3 +1,5 @@
+package Coffee;
+
 public class ByeCommand extends Command {
 
     @Override
