@@ -1,7 +1,10 @@
-import java.util.Scanner;
-
 public class Coffee {
-    public static void main(String[] args) {
+
+    private Storage storage;
+    private TaskList tasks;
+    private Ui ui;
+
+    public Coffee(String filePath) {
         String coffee =
                 "  ____       __  __\n" +
                         " / ___|___  / _|/ _| ___  ___\n" +
@@ -12,73 +15,37 @@ public class Coffee {
         System.out.println(coffee);
         System.out.println("Hello! I'm Coffee.\n");
         System.out.println("What can I do for you?\n");
+        ui = new Ui();
+        storage = new Storage(filePath);
 
-        Scanner sc = new Scanner(System.in);
+        try {
+            tasks = new TaskList(storage.load());
+        } catch (Exception e) {
+            ui.showLoadingError();
+            tasks = new TaskList();
+        }
+    }
 
-        TaskList taskList = new TaskList();
-
+    public void run() {
         while (true) {
-            String line = sc.nextLine();
-            String[] parts = line.split("\\s+", 2);
-            String cmdWord = parts[0];
-            String rest = parts.length > 1 ? parts[1] : "";
-
-            CommandType cmd = CommandType.from(cmdWord);
-
-            switch (cmd) {
-                case BYE:
-                    System.out.println("Bye. Hope to see you again soon!\n");
-                    sc.close();
-                    return;
-                case MARK:
-                    taskList.markAsDone(Integer.parseInt(rest));
+            String full = ui.readCommand();
+            try {
+                Command c = Parser.parseCommand(full);
+                c.execute(tasks, ui, storage);
+                if (c.isExit()) {
                     break;
-                case UNMARK:
-                    taskList.markAsNotDone(Integer.parseInt(rest));
-                    break;
-                case LIST:
-                    taskList.list();
-                    break;
-                case TODO:
-                    try {
-                        taskList.addTask(new ToDo(rest));
-                    } catch (IllegalArgumentException e) {
-                        System.out.println("The todo command format is wrong. Use: todo <desc>");
-                    }
-                    break;
-                case DEADLINE:
-                    try {
-                        String deadlineDescription = rest.split("/by")[0].trim();
-                        String by = rest.split("/by")[1].trim();
-                        taskList.addTask(new Deadline(deadlineDescription, by));
-                    } catch (ArrayIndexOutOfBoundsException e) {
-                        System.out.println("The deadline command format is wrong. Use: deadline <desc> /by <time>");
-                    }
-                    break;
-                case EVENT:
-                    try {
-                        String[] fromSplit = rest.split("/from", 2);
-                        String eventDescription = fromSplit[0].trim();
-
-                        String[] toSplit = fromSplit[1].split("/to", 2);
-                        String from = toSplit[0].trim();
-                        String to = toSplit[1].trim();
-
-                        taskList.addTask(new Event(eventDescription, from, to));
-                    } catch (ArrayIndexOutOfBoundsException e) {
-                        System.out.println("The event command format is wrong. Use: deadline <desc> /from <time> /to <time>");
-                    }
-                    break;
-                case DELETE:
-                    taskList.deleteTask(Integer.parseInt(rest));
-                    break;
-                case UNKNOWN:
-                    System.out.println("OOPS!!! I'm sorry, but I don't know what that means :-(");
-                    break;
+                }
+            } catch (IllegalArgumentException e) {
+                ui.showMessage(e.getMessage());
+            } catch (Exception e) {
+                ui.showMessage("Unexpected error: " + e.getMessage());
             }
-            taskList.saveToDisc();
             LineBreak.printLineBreak();
         }
+    }
 
+    public static void main(String[] args) {
+        new Coffee("data/tasks.txt").run();
     }
 }
+
