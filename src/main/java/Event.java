@@ -13,6 +13,16 @@ public class Event extends Task {
         this.to   = LocalDateTime.parse(to, formatter);
     }
 
+    public Event(String description, String from, String to, boolean isDone) {
+        super(description);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
+        this.from = LocalDateTime.parse(from, formatter);
+        this.to   = LocalDateTime.parse(to, formatter);
+        if (isDone) {
+            this.markAsDone();
+        }
+    }
+
     @Override
     public String toString() {
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("MMM dd yyyy HH:mm");
@@ -20,8 +30,11 @@ public class Event extends Task {
                 + " to: " + to.format(fmt) + ")";
     }
 
+    @Override
     public String toFileString() {
-        return "E | " + super.getStatusIcon() + " | " + description + " | " + from + " " + to;
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
+        return "E | " + super.getStatusIcon() + " | " + description
+                + " | " + from.format(fmt) + " " + to.format(fmt);
     }
 
 }
