@@ -1,6 +1,16 @@
 package Coffee;
 
+/**
+ * Parses full user input strings into executable {@code Command} objects.
+ */
 public class Parser {
+
+    /**
+     * Parses the given full command string into a {@code Command}.
+     *
+     * @param fullCommand User input string containing a command keyword and optional arguments.
+     * @return Corresponding {@code Command} object based on the keyword.
+     */
     public static Command parseCommand(String fullCommand) {
         String[] parts = fullCommand.split(" ", 2);
         String keyword = parts[0].toLowerCase();
