@@ -55,4 +55,15 @@ public class TaskList {
         return this.taskList.size();
     }
 
+    public List<Task> find(String keyword) {
+        String needle = keyword.toLowerCase();
+        List<Task> out = new ArrayList<>();
+        for (Task t : taskList) {
+            if (t.description.toLowerCase().contains(needle)) {
+                out.add(t);
+            }
+        }
+        return out;
+    }
+
 }
