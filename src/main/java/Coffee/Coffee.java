@@ -71,4 +71,11 @@ public class Coffee {
     public static void main(String[] args) {
         new Coffee("data/tasks.txt").run();
     }
+
+    /**
+     * Generates a response for the user's chat message.
+     */
+    public String getResponse(String input) {
+        return "Coffee heard: " + input;
+    }
 }
