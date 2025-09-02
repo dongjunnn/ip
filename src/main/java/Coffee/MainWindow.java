@@ -33,6 +33,11 @@ public class MainWindow extends AnchorPane {
     /** Injects the Duke instance */
     public void setDuke(Coffee c) {
         coffee = c;
+
+        String opening = coffee.greet();
+        dialogContainer.getChildren().add(
+        DialogBox.getCoffeeDialog(opening, dukeImage)
+        );
     }
 
     /**
