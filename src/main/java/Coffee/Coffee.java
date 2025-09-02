@@ -11,6 +11,10 @@ public class Coffee {
     private TaskList tasks;
     private Ui ui;
 
+    public String greet() {
+        return "Hi! I’m Coffee ☕ — what can I do for you? (try: todo, deadline, list, find, bye)";
+    }
+
     /**
      * Constructs a Coffee application instance with the given file path for storage.
      * Initializes the UI, loads tasks from storage, and displays a welcome message.
@@ -70,5 +74,41 @@ public class Coffee {
      */
     public static void main(String[] args) {
         new Coffee("data/tasks.txt").run();
+    }
+
+    /**
+     * Generates a response for the user's chat message.
+     */
+    public String getResponse(String input) {
+        java.io.PrintStream originalOut = System.out;
+        java.io.ByteArrayOutputStream buf = new java.io.ByteArrayOutputStream();
+        java.io.PrintStream capture = new java.io.PrintStream(buf, true, java.nio.charset.StandardCharsets.UTF_8);
+        System.setOut(capture);
+        try {
+            Command c = Parser.parseCommand(input);
+            // run one command using your existing pipeline
+            c.execute(tasks, ui, storage);
+            String out = buf.toString(java.nio.charset.StandardCharsets.UTF_8);
+            if (c.isExit()) {
+                javafx.application.Platform.exit();
+            }
+                return out.isBlank() ? "(no output)" : out.strip();
+            } catch (IllegalArgumentException e) {
+                return e.getMessage();
+            } catch (Exception e) {
+                return "Unexpected error: " + e.getMessage();
+            } finally {
+                System.setOut(originalOut);
+                try {
+                    capture.close();
+                } catch (Exception ignore) {
+
+                }
+                try {
+                    buf.close();
+                } catch (Exception ignore) {
+
+                }
+            }
     }
 }
