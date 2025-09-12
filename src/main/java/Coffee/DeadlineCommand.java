@@ -32,10 +32,6 @@ public class DeadlineCommand extends Command {
      */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
-        Deadline d = new Deadline(description, by);
-        tasks.addTask(d);
-        storage.save(tasks.view());
-        ui.showMessage("Got it. I've added this task:\n" + d);
-        ui.showMessage("Now you have " + tasks.size() + " tasks in the list.");
+        CommandUtil.addSaveAndAck(description, tasks, ui, storage);
     }
 }
