@@ -28,6 +28,14 @@ public class DeleteCommand extends Command {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Executes the command by deleting the specified task from the task list.
+     * Saves the updated list to storage and displays confirmation messages to the user.
+     *
+     * @param tasks Task list from which the task will be deleted.
+     * @param ui User interface for displaying messages.
+     * @param storage Storage for saving the updated task list.
+     */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         // Collect results of deletions
