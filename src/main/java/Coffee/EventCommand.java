@@ -45,10 +45,6 @@ public class EventCommand extends Command {
      */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
-        Event event = new Event(description, from, to);
-        tasks.addTask(event);
-        storage.save(tasks.view());
-        ui.showMessage("Got it. I've added this task:\n" + event);
-        ui.showMessage("Now you have " + tasks.size() + " tasks in the list.");
+        CommandUtil.addSaveAndAck(description, tasks, ui, storage);
     }
 }
