@@ -28,13 +28,18 @@ public class TaskList {
     public void addTask(Task task) {
         taskList.add(task);
         System.out.println();
+        assert !taskList.isEmpty() : "Task list should not be empty after adding a task";
     }
 
     public Task deleteTask(int i) {
         int index = i - 1;
-        Task deletedTask = taskList.get(index);
-        taskList.remove(index);
-        return deletedTask;
+        if (index < 0 || index >= taskList.size()) {
+            throw new IndexOutOfBoundsException("Invalid task index: " + i);
+        }
+        assert !taskList.isEmpty() : "Task list should not be empty before deleting a task";
+        Task removed = taskList.remove(index);
+        assert taskList.size() >= 0 : "Task list size should not be negative after deletion";
+        return removed;
     }
 
     public void markAsDone(int i) {
