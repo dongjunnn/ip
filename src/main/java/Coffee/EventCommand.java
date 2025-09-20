@@ -21,14 +21,16 @@ public class EventCommand extends Command {
     public EventCommand(String args) {
         String[] fromSplit = args.split("/from", 2);
         if (fromSplit.length < 2) {
-            throw new IllegalArgumentException("The event command format is wrong. Use: event <desc> /from <time> /to <time>");
+            throw new IllegalArgumentException("The event command format is wrong. " +
+                    "Use: event <desc> /from <time> /to <time>");
         }
 
         this.description = fromSplit[0].trim();
 
         String[] toSplit = fromSplit[1].split("/to", 2);
         if (toSplit.length < 2) {
-            throw new IllegalArgumentException("The event command format is wrong. Use: event <desc> /from <time> /to <time>");
+            throw new IllegalArgumentException("The event command format is wrong. " +
+                    "Use: event <desc> /from <time> /to <time>");
         }
 
         this.from = toSplit[0].trim();
@@ -45,6 +47,11 @@ public class EventCommand extends Command {
      */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
-        CommandUtil.addSaveAndAck(description, tasks, ui, storage);
+        try {
+            CommandUtil.addEventSaveAndAck(description, from, to, tasks, ui, storage);
+        } catch (Exception e) {
+            ui.showMessage("Error: Please enter both start and end date/time in the format yyyy-MM-dd HHmm " +
+                    "(e.g., 2024-06-10 1800).");
+        }
     }
 }

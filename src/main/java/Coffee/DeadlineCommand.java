@@ -32,6 +32,11 @@ public class DeadlineCommand extends Command {
      */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
-        CommandUtil.addSaveAndAck(description, tasks, ui, storage);
+        try {
+            // Try to create the Deadline (will throw if format is wrong)
+            CommandUtil.addDeadlineSaveAndAck(description, by, tasks, ui, storage);
+        } catch (Exception e) {
+            ui.showMessage("Error: Pls enter the date in the format yyyy-MM-dd HHmm (e.g., 2024-06-10 1800).");
+        }
     }
 }
