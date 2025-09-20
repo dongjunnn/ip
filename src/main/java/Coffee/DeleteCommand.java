@@ -22,11 +22,23 @@ public class DeleteCommand extends Command {
      *             of the tasks to delete.
      */
     public DeleteCommand(String args) {
+        // this is done with AI help to better catch index errors
         this.indices = Arrays.stream(args.trim().split("\\s+"))
-                .map(Integer::parseInt)
-                .sorted(Comparator.reverseOrder()) // delete highest index first
+                .map(s -> {
+                    try {
+                        int idx = Integer.parseInt(s);
+                        if (idx <= 0) {
+                            throw new IllegalArgumentException("Index must be positive: " + s);
+                        }
+                        return idx;
+                    } catch (NumberFormatException e) {
+                        throw new IllegalArgumentException("Invalid index: " + s);
+                    }
+                })
+                .sorted(Comparator.reverseOrder())
                 .collect(Collectors.toList());
     }
+
 
     /**
      * Executes the command by deleting the specified task from the task list.
