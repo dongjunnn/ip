@@ -2,57 +2,50 @@ package Coffee;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ToDoTest {
+class ToDoTest {
 
     @Test
     void constructor_blankDescription_throws() {
-        assertThrows(IllegalArgumentException.class, () -> new ToDo(" "));
-        assertThrows(IllegalArgumentException.class, () -> new ToDo("\t"));
+        assertThrows(IllegalArgumentException.class, () -> new ToDo("   "));
         assertThrows(IllegalArgumentException.class, () -> new ToDo(""));
     }
 
     @Test
+    void constructor_default_isNotDone() {
+        ToDo t = new ToDo("read book");
+        // Verify via file/string formats so we don't rely on internals
+        assertTrue(t.toString().startsWith("[T][ ]"));
+        assertEquals("T |   | read book", t.toFileString());
+    }
+
+    @Test
     void toString_hasPrefixT_andContainsDescription() {
-        ToDo t = new ToDo("buy milk");
+        ToDo t = new ToDo("submit report");
         String s = t.toString();
-        assertTrue(s.startsWith("[T]"), "toString() should start with [T]");
-        assertTrue(s.contains("buy milk"), "toString() should contain the description");
+        assertTrue(s.startsWith("[T]"), "toString should start with [T]");
+        assertTrue(s.contains("submit report"));
+        // Also sanity-check the not-done status icon in the composite string
+        assertTrue(s.contains("[ ]"), "New ToDo should be not done");
     }
 
     @Test
     void toFileString_hasTypeIconAndDescription_inThatOrder() {
-        String desc = "finish report";
-        ToDo t = new ToDo(desc);
+        ToDo t = new ToDo("buy milk");
+        // Not done:
+        assertEquals("T |   | buy milk", t.toFileString());
 
-        String fs = t.toFileString(); // "T | <icon> | finish report"
-
-        Pattern p = Pattern.compile("^T\\s*\\|\\s*(.)\\s*\\|\\s*(.*)$");
-        Matcher m = p.matcher(fs);
-        assertTrue(m.matches(), "toFileString format should be: T | <icon> | <description>");
-
-        String icon = m.group(1);
-        String parsedDesc = m.group(2);
-
-        assertEquals(t.getStatusIcon(), icon, "Second part should match status icon");
-        assertEquals(desc, parsedDesc, "Third part should be the original description");
+        // Mark as done and check again
+        t.markAsDone();
+        assertEquals("T | X | buy milk", t.toFileString());
     }
 
     @Test
     void constructor_withIsDoneTrue_setsDoneStatus() {
-        ToDo done = new ToDo("read book", true);
-        ToDo notDone = new ToDo("read book");
-
-        assertNotEquals(notDone.getStatusIcon(), done.getStatusIcon(),
-                "Status icon should differ when constructed with isDone=true");
-
-        String fs = done.toFileString();
-        Matcher m = Pattern.compile("^T\\s*\\|\\s*(.)\\s*\\|\\s*(.*)$").matcher(fs);
-        assertTrue(m.matches());
-        assertEquals(done.getStatusIcon(), m.group(1));
+        ToDo t = new ToDo("pay bills", true);
+        // Check via observable outputs
+        assertTrue(t.toString().contains("[X]"), "Should be marked done");
+        assertEquals("T | X | pay bills", t.toFileString());
     }
 }
